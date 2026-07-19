@@ -21,15 +21,12 @@ jobs:
           docker run -d -p 8000:8000 --name mlops-container mlops-api
           sleep 5
 
-      - name: Test /health endpoint
-        run: |
-          curl -f http://localhost:8000/health
+      - name: Test health endpoint
+        run: curl -f http://localhost:8000/health
 
-      - name: Test /predict endpoint
+      - name: Test predict endpoint
         run: |
-          RESPONSE=curl -s http://localhost:8000/predict?x=100
-          echo "Response: "
-          echo "" | grep -q "251.3"
+          curl -s http://localhost:8000/predict?x=100 | grep "251.3"
 
       - name: Stop container
         run: docker stop mlops-container
